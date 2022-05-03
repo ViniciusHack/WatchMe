@@ -27,7 +27,6 @@ interface IContentProps {
 }
 
 export function Content({ selectedGenre, selectedGenreId, setSelectedGenre }: IContentProps) {
-
   
   const [movies, setMovies] = useState<MovieProps[]>([]);
 

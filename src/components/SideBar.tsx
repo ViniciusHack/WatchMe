@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { api } from "../services/api";
 import { Button } from "./Button";
 
@@ -18,11 +18,17 @@ export function SideBar(props: ISideBarProps) {
   const [genres, setGenres] = useState<GenreResponseProps[]>([]);
 
   
-  useEffect(() => {
+  useMemo(() => {
     api.get<GenreResponseProps[]>('genres').then(response => {
       setGenres(response.data);
-    });
-  }, []);
+    })
+  }, [])
+
+  // useEffect(() => {
+  //   api.get<GenreResponseProps[]>('genres').then(response => {
+  //     setGenres(response.data);
+  //   });
+  // }, []);
 
   return (
   <nav className="sidebar">
