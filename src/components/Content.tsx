@@ -17,6 +17,7 @@ interface MovieProps {
     Value: string;
   }>;
   Runtime: string;
+  isFavorite: boolean;
 }
 
 
@@ -30,15 +31,31 @@ export function Content({ selectedGenre, selectedGenreId, setSelectedGenre }: IC
   
   const [movies, setMovies] = useState<MovieProps[]>([]);
 
+  console.log(movies);
+
   useEffect(() => {
     api.get<MovieProps[]>(`movies/?Genre_id=${selectedGenreId}`).then(response => {
-      setMovies(response.data);
+      setMovies(response.data.map(movie => {
+        movie.isFavorite = false;
+        return movie;
+      }));
     });
 
     api.get<GenreResponseProps>(`genres/${selectedGenreId}`).then(response => {
       setSelectedGenre(response.data);
     })
   }, [selectedGenreId]);
+
+  const handleFavorite = (id: string) => {
+    setMovies(
+      movies.map(movie => {
+        if(movie.imdbID === id) {
+          movie.isFavorite = !movie.isFavorite;
+        }
+        return movie
+      })
+    )
+  }
 
   return (
     <div className="container">
@@ -49,7 +66,16 @@ export function Content({ selectedGenre, selectedGenreId, setSelectedGenre }: IC
         <main>
           <div className="movies-list">
             {movies.map(movie => (
-              <MovieCard key ={movie.imdbID} title={movie.Title} poster={movie.Poster} runtime={movie.Runtime} rating={movie.Ratings[0].Value} />
+              <MovieCard 
+                key ={movie.imdbID} 
+                title={movie.Title} 
+                poster={movie.Poster} 
+                runtime={movie.Runtime} 
+                rating={movie.Ratings[0].Value}
+                id={movie.imdbID}
+                isFavorite={movie.isFavorite}
+                onFavorite={handleFavorite}
+              />
             ))}
           </div>
         </main>
