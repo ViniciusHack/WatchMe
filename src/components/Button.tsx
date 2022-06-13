@@ -5,7 +5,7 @@ import { Icon } from './Icon';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   title: string;
-  iconName: 'action' | 'comedy' | 'documentary' | 'drama' | 'horror' | 'family';
+  iconName: 'action' | 'comedy' | 'documentary' | 'drama' | 'horror' | 'family' | "favorite";
   selected: boolean;
 }
 

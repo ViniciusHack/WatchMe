@@ -23,7 +23,7 @@ interface MovieProps {
 
 interface IContentProps {
   selectedGenre: GenreResponseProps,
-  selectedGenreId: number
+  selectedGenreId: number | null,
   setSelectedGenre: Function
 }
 
@@ -31,19 +31,21 @@ export function Content({ selectedGenre, selectedGenreId, setSelectedGenre }: IC
   
   const [movies, setMovies] = useState<MovieProps[]>([]);
 
-  console.log(movies);
-
   useEffect(() => {
-    api.get<MovieProps[]>(`movies/?Genre_id=${selectedGenreId}`).then(response => {
-      setMovies(response.data.map(movie => {
-        movie.isFavorite = false;
-        return movie;
-      }));
-    });
-
-    api.get<GenreResponseProps>(`genres/${selectedGenreId}`).then(response => {
-      setSelectedGenre(response.data);
-    })
+    if(selectedGenreId !== null) {
+      api.get<MovieProps[]>(`movies/?Genre_id=${selectedGenreId}`).then(response => {
+        setMovies(response.data.map(movie => {
+          movie.isFavorite = false;
+          return movie;
+        }));
+      });
+  
+      api.get<GenreResponseProps>(`genres/${selectedGenreId}`).then(response => {
+        setSelectedGenre(response.data);
+      })
+    } else [
+      setMovies(movies.filter(movie => movie.isFavorite))
+    ]
   }, [selectedGenreId]);
 
   const handleFavorite = (id: string) => {

@@ -25,7 +25,7 @@ export function MovieCard(props: MovieCardProps) {
         <div className="movie-info">
 
         <div className="favorite" onClick={() => props.onFavorite(props.id)}>
-          <Heart color={props.isFavorite ? "var(--red)" : "var(--yellow)"}/>
+          <Heart color={props.isFavorite ? "var(--red)" : "var(--white)"}/>
         </div>
 
           <span>{props.title}</span>

@@ -12,11 +12,11 @@ interface GenreResponseProps {
 }
 
 export function App() {
-  const [selectedGenreId, setSelectedGenreId] = useState(1);
+  const [selectedGenreId, setSelectedGenreId] = useState<number | null>(1);
   const [selectedGenre, setSelectedGenre] = useState<GenreResponseProps>({} as GenreResponseProps);
 
 
-  const handleClickButton = useCallback((id: number) => {
+  const handleClickButton = useCallback((id: number | null) => {
     setSelectedGenreId(id);
   }, [])
 

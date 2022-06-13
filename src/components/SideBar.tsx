@@ -9,7 +9,7 @@ interface GenreResponseProps {
 }
 
 interface ISideBarProps {
-  selectedGenreId: number;
+  selectedGenreId: number | null;
   click: Function
 }
 
@@ -44,6 +44,12 @@ export function SideBar(props: ISideBarProps) {
               selected={props.selectedGenreId === genre.id}
             />
           ))}
+          <Button
+            title="Favoritos"
+            iconName="favorite"
+            onClick={() => props.click(null)}
+            selected={props.selectedGenreId === null}
+          />
         </div>
 
       </nav>
